@@ -1,0 +1,28 @@
+.bg
+{
+    background-color:#64748b;
+}
+h1
+{
+    font-size: 50px;
+}
+body
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+form
+{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+label
+{
+    padding: 5px;
+}
