@@ -5,6 +5,8 @@ import pg from "pg";
 
 const app = express();
 const port = 3000;
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static("public"));
 env.config();
 
 const db = new pg.Client({
@@ -16,17 +18,26 @@ const db = new pg.Client({
 });
 db.connect();
 
-
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(express.static("public"));
-
-
-
 app.get("/",(req,res)=>
 {
     res.render("index.ejs");
 })
+
+app.post("/submit",async (req,res)=>
+{
+    try
+    {       
+        const trWord = req.body.turkish;
+        const engWord = req.body.english;
+        console.log(trWord,engWord);
+        db.query("INSERT INTO words (tr,eng) VALUES ($1,$2) RETURNING id",[trWord,engWord]);
+        res.redirect("/")
+    }
+    catch(err)
+    {
+        console.error("Something bad happend:", err)
+    }
+});
 
 app.listen(port, ()=>
 {
