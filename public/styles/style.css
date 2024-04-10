@@ -26,3 +26,9 @@ label
 {
     padding: 5px;
 }
+.main
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}

@@ -6,7 +6,7 @@
   <link href="./styles/style.css" rel="stylesheet">
   
 </head>
-<body class="bg">
+<body class="bg" id="body">
   <h1>Welcome to your Word Storage!</h1>
   <h2>
     Enter your words!
@@ -22,5 +22,11 @@
     </div>
     <button type="submit">Submit</button>
   </form>
+  <div class="main">
+    <% data.forEach(e => { %>
+      <p> <%=e.tr%> - <%= e.eng %> </p>
+    <% }); %>
+  </div>
+  
 </body>
 </html>

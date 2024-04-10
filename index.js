@@ -18,9 +18,19 @@ const db = new pg.Client({
 });
 db.connect();
 
-app.get("/",(req,res)=>
+let data=[]
+app.get("/",async (req,res)=>
 {
-    res.render("index.ejs");
+    try
+    {
+        const result = await db.query("SELECT tr, eng FROM words");
+        data = result.rows;
+    }
+    catch(err)
+    {
+        console.log("ERORRRR",err);
+    }
+    res.render("index.ejs",{data:data});
 })
 
 app.post("/submit",async (req,res)=>
@@ -29,9 +39,8 @@ app.post("/submit",async (req,res)=>
     {       
         const trWord = req.body.turkish;
         const engWord = req.body.english;
-        console.log(trWord,engWord);
-        db.query("INSERT INTO words (tr,eng) VALUES ($1,$2) RETURNING id",[trWord,engWord]);
-        res.redirect("/")
+        await db.query("INSERT INTO words (tr,eng) VALUES ($1,$2) RETURNING id",[trWord,engWord]);
+        res.redirect("/") 
     }
     catch(err)
     {
